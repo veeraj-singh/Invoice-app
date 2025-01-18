@@ -1,12 +1,13 @@
 const express = require('express')
 const cors = require('cors')
-const dotenv = require('dotenv')
 const mongoose = require('mongoose')
 const passport = require('./config/Passport')
 const authRoutes = require('./routes/auth')
 const invoiceRoutes = require('./routes/Invoice')
+const zapierRoutes = require('./routes/zapier');
 const app = express()
 
+const dotenv = require('dotenv')
 dotenv.config()
 
 app.use(cors())
@@ -17,8 +18,9 @@ mongoose.connect(process.env.MONGODB_URI)
     .then(() => console.log('Connected to MongoDB'))
     .catch(err => console.error('MongoDB connection error:', err))
 
-app.use('/auth', authRoutes);
-app.use('/invoice', invoiceRoutes)
+app.use('/api/auth', authRoutes)
+app.use('/api/invoice', invoiceRoutes)
+app.use('/api/zapier', zapierRoutes)
 
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () => {
