@@ -55,12 +55,6 @@ const InvoicePreviewPage = () => {
       setLoading(false);
     }
   };
-
-  const handleScheduleReminder = () => {
-    showNotification('success', 'Reminder scheduled successfully!');
-    // Add logic to schedule reminders
-  };
-
   if (loading) return <div className="flex justify-center items-center py-8"><Loader className="h-8 w-8 animate-spin" /></div>;
   if (!invoiceData) return <div>Loading...</div>;
 
@@ -81,9 +75,6 @@ const InvoicePreviewPage = () => {
         <div className="p-6">
           <div className="flex justify-between items-center mb-8">
             <div className="space-x-2">
-              <button onClick={handleScheduleReminder} className="px-4 py-2 bg-gray-100 rounded-md">
-                Schedule Reminders
-              </button>
               <button onClick={handleSendEmail} className="px-4 py-2 bg-gray-700 text-white rounded-md">
                 {loading ? <Loader className="h-5 w-5 animate-spin" /> : 'Send Email'}
               </button>

@@ -29,7 +29,6 @@ const CreateInvoicePage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Basic validation
     if (parseFloat(invoiceData.amount) <= 0) {
       showNotification('error', 'Amount must be greater than zero.');
       return;

@@ -4,6 +4,7 @@ import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
 import CreateInvoicePage from './pages/CreateInvoice'
 import InvoicePreviewPage from './pages/PreviewInvoice'
+import EmailTemplateManagement from './pages/Templates'
 import Navbar from './components/Navbar'
 
 function PrivateRoute({ children }) {
@@ -63,6 +64,16 @@ export default function App() {
               <PrivateRoute>
                 <AuthenticatedLayout>
                   <InvoicePreviewPage />
+                </AuthenticatedLayout>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/email-templates"
+            element={
+              <PrivateRoute>
+                <AuthenticatedLayout>
+                  <EmailTemplateManagement />
                 </AuthenticatedLayout>
               </PrivateRoute>
             }
