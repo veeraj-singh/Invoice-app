@@ -1,0 +1,23 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 48 48"
+  fill="none"
+  className="h-10 w-auto"
+>
+  <!-- Background Circle -->
+  <circle cx="24" cy="24" r="24" fill="#2563EB" />
+  
+  <!-- Inner Icon (Dollar and Document Shape) -->
+  <path
+    d="M16 12h16a2 2 0 0 1 2 2v20a2 2 0 0 1-2 2H16a2 2 0 0 1-2-2V14a2 2 0 0 1 2-2z"
+    fill="#FFF"
+  />
+  <path
+    d="M20 16h8v2h-8v-2zM20 20h8v2h-8v-2zM20 24h4v2h-4v-2zM20 28h8v2h-8v-2z"
+    fill="#2563EB"
+  />
+  <path
+    d="M24 22.5a2.5 2.5 0 0 1 2.5 2.5h-5a2.5 2.5 0 0 1 2.5-2.5z"
+    fill="#2563EB"
+  />
+</svg>

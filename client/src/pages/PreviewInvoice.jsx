@@ -1,33 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import Navbar from '../components/Navbar';
-import { useAuth } from '../context/auth';
 import axios from 'axios';
+import { Loader, CheckCircle, AlertCircle } from 'lucide-react';
 
 const InvoicePreviewPage = () => {
-    const { user , logout } = useAuth()
-    const pic = user?.pic
-    const { invoiceId } = useParams();
-    const navigate = useNavigate();
-    const [invoiceData, setInvoiceData] = useState(null);
-    const [notification, setNotification] = useState({
-      show: false,
-      type: '',
-      message: ''
-    });
+  const { invoiceId } = useParams();
+  const navigate = useNavigate();
+  const [invoiceData, setInvoiceData] = useState(null);
+  const [notification, setNotification] = useState({
+    show: false,
+    type: '',
+    message: ''
+  });
+  const [loading, setLoading] = useState(false);
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     const fetchInvoice = async () => {
-        const token = localStorage.getItem('token')
+      setLoading(true);
       try {
-        const response = await axios.get(`http://localhost:5000/invoice/${invoiceId}`,{
-            headers: {
-              'Authorization': `Bearer ${token}`
-            }
-          });
+        const response = await axios.get(`http://localhost:5000/api/invoice/${invoiceId}`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
         setInvoiceData(response.data);
       } catch (error) {
-        console.error('Error fetching invoice:', error);
+        showNotification('error', 'Error fetching invoice data');
+      } finally {
+        setLoading(false);
       }
     };
     fetchInvoice();
@@ -40,16 +41,27 @@ const InvoicePreviewPage = () => {
     }, 5000);
   };
 
-  const handleSendEmail = () => {
-    showNotification('success', 'Invoice email sent successfully!');
-    // Add email sending logic here
+  const handleSendEmail = async () => {
+    setLoading(true);
+    try {
+      await axios.post('http://localhost:5000/api/zapier/manual-reminder', { invoiceId }, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      showNotification('success', 'Invoice email sent successfully!');
+    } catch (error) {
+      console.error('Error sending reminder:', error);
+      showNotification('error', 'Failed to send reminder');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleScheduleReminder = () => {
     showNotification('success', 'Reminder scheduled successfully!');
-    // Add reminder scheduling logic here
+    // Add logic to schedule reminders
   };
 
+  if (loading) return <div className="flex justify-center items-center py-8"><Loader className="h-8 w-8 animate-spin" /></div>;
   if (!invoiceData) return <div>Loading...</div>;
 
   return (
@@ -60,6 +72,7 @@ const InvoicePreviewPage = () => {
 
       {notification.show && (
         <div className={`absolute top-4 right-4 p-4 rounded-md flex items-center space-x-2 ${notification.type === 'success' ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'}`}>
+          {notification.type === 'success' ? <CheckCircle className="h-5 w-5" /> : <AlertCircle className="h-5 w-5" />}
           <span>{notification.message}</span>
         </div>
       )}
@@ -68,17 +81,11 @@ const InvoicePreviewPage = () => {
         <div className="p-6">
           <div className="flex justify-between items-center mb-8">
             <div className="space-x-2">
-              <button
-                onClick={() => showNotification('Reminder scheduled', 'success')}
-                className="px-4 py-2 bg-gray-100 rounded-md"
-              >
+              <button onClick={handleScheduleReminder} className="px-4 py-2 bg-gray-100 rounded-md">
                 Schedule Reminders
               </button>
-              <button
-                onClick={() => showNotification('Email sent successfully', 'success')}
-                className="px-4 py-2 bg-gray-700 text-white rounded-md"
-              >
-                Send Email
+              <button onClick={handleSendEmail} className="px-4 py-2 bg-gray-700 text-white rounded-md">
+                {loading ? <Loader className="h-5 w-5 animate-spin" /> : 'Send Email'}
               </button>
             </div>
           </div>
@@ -87,7 +94,7 @@ const InvoicePreviewPage = () => {
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Amount (₹)</label>
-                <p>{invoiceData.amount}</p>
+                <p>{invoiceData.amount.toLocaleString()}</p>
               </div>
 
               <div>
@@ -138,10 +145,7 @@ const InvoicePreviewPage = () => {
           </div>
 
           <div className="flex justify-end space-x-2 mt-8">
-            <button
-              onClick={() => navigate('/')}
-              className="px-4 py-2 border rounded-md hover:bg-gray-50"
-            >
+            <button onClick={() => navigate('/')} className="px-4 py-2 border rounded-md hover:bg-gray-50">
               Back
             </button>
           </div>

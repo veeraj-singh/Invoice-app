@@ -25,7 +25,7 @@ const AuthenticatedLayout = ({ children }) => {
     const { user, logout } = useAuth();
     return (
     <div className="min-h-screen bg-gray-100">
-      <Navbar userPic={user?.pic } onLogout={logout} />
+      <Navbar userPic={user?.pic} onLogout={logout}/>
         {children}
       </div>
     );

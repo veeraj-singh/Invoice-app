@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }) => {
             }
 
             try {
-                const response = await axios.get('http://localhost:5000/auth/verify', {
+                const response = await axios.get('http://localhost:5000/api/auth/verify', {
                     headers: { Authorization: `Bearer ${token}` }
                 })
                 localStorage.setItem('token', token);
