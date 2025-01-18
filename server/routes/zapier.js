@@ -127,31 +127,35 @@ router.post('/manual-reminder', authMiddleware , async (req, res) => {
   });
 
 
-
-router.post('/update-reminder', zapierAuthMiddleware, async (req, res) => {
-    try {
-        const { invoiceId, reminderStatus = 'sent', response = 'none' } = req.body;
-        
-        const invoice = await Invoice.findById(invoiceId);
-        if (!invoice) {
-        return res.status(404).json({ error: 'Invoice not found' });
-        }
-
-        invoice.remindersSent.push({
-        date: new Date(),
-        status: reminderStatus,
-        followUp: {
+router.post('/invoice-responses', zapierAuthMiddleware , async (req, res) => {
+  try {
+    const emailData = req.body;
+    
+    const subject = emailData.Subject || '';
+    const body = emailData.Body_Plain || '';
+    
+    const invoiceId = subject.split('#')[1]?.split(' ')[0];
+    
+    if (invoiceId) {
+      await Invoice.findOneAndUpdate(
+        { _id: invoiceId },
+        {
+          'remindersSent.$[last].followUp': {
             date: new Date(),
-            recipientResponse: response,
-            actionTaken: 'Email reminder sent'
+            recipientResponse: 'acknowledged',
+            actionTaken: body.substring(0, 100) 
+          }
+        },
+        {
+          arrayFilters: [{ "last": { $eq: { $arrayElemAt: ["$remindersSent", -1] } } }]
         }
-        });
-
-        await invoice.save();
-        res.json({ success: true, invoice });
-    } catch (error) {
-        res.status(500).json({ error: error.message });
+      );
     }
+
+    res.json({ success: true });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to process response' });
+  }
 });
 
 module.exports = router;

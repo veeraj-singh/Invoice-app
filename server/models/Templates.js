@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const emailTemplateSchema = new mongoose.Schema({
   type: {
     type: String,
-    enum: ['DUE_SOON', 'PAST_DUE', 'FINAL_NOTICE'],
+    enum: ['DUE_SOON', 'PAST_DUE', 'FINAL_NOTICE','REMINDER','GENERIC_REMINDER'],
     required: true,
     unique: true
   },
