@@ -129,28 +129,25 @@ router.post('/manual-reminder', authMiddleware , async (req, res) => {
 
 router.post('/invoice-responses', zapierAuthMiddleware , async (req, res) => {
   try {
-    const emailData = req.body;
+    const { Body, Date, Subject } = req.body;
+    if (!Body || !Date || !Subject) {
+        return res.status(400).json({ error: "Missing required fields in the payload" });
+    }
     
-    const subject = emailData.Subject || '';
-    const body = emailData.Body_Plain || '';
-    
-    const invoiceId = subject.split('#')[1]?.split(' ')[0];
+    const invoiceId = Subject.split('#')[1]?.split(' ')[0];
+    const firstLine = Body.split("\n")[0]
     
     if (invoiceId) {
-      await Invoice.findOneAndUpdate(
-        { _id: invoiceId },
-        {
-          'remindersSent.$[last].followUp': {
-            date: new Date(),
-            recipientResponse: 'acknowledged',
-            actionTaken: body.substring(0, 100) 
-          }
-        },
-        {
-          arrayFilters: [{ "last": { $eq: { $arrayElemAt: ["$remindersSent", -1] } } }]
-        }
-      );
-    }
+      const invoice = await Invoice.findById(invoiceId);
+      if (invoice && invoice.remindersSent.length > 0) {
+          const lastIndex = invoice.remindersSent.length - 1;
+          // invoice.remindersSent[lastIndex].followUp.date =  new Date().toISOString()
+          invoice.remindersSent[lastIndex].followUp.recipientResponse = 'acknowledged';
+          invoice.remindersSent[lastIndex].followUp.actionTaken = firstLine.substring(0, 50);
+          console.log(invoice.remindersSent[lastIndex].followUp)
+          await invoice.save();
+      }
+  }  
 
     res.json({ success: true });
   } catch (error) {
