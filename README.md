@@ -46,7 +46,7 @@ npm install
 
 4. Create a `.env` file in the frontend root directory:
 ```bash
-VITE_API_URL=http://localhost:5000
+VITE_BACKEND_URL=https://invoice-app-8q1z.onrender.com
 ```
 
 5. Start the development server:
@@ -77,7 +77,6 @@ GOOGLE_CLIENT_SECRET=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
 JWT_SECRET=jwt_secret_key
 ZAPIER_API_KEY=341dd7f9fa57ee22a1bb6e4c13315f92a8467c24d67d84e35a41f9ade0d0721f
 CLIENT_URL=http://localhost:5173
-BASE_URL=https://invoice-app-8q1z.onrender.com
 ZAPIER_WEBHOOK_URL1=https://hooks.zapier.com/hooks/catch/21356726/2k9s58p/
 ZAPIER_WEBHOOK_URL2=https://hooks.zapier.com/hooks/catch/21356726/2k9hwkk/
 
