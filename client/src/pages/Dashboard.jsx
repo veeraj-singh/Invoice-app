@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
-import { useAuth } from "../context/auth";
 import axios from "axios";
 import DashboardStats from "../components/Dashboardstats";
 import InvoiceTable from "../components/Invoicetable";
-import Navbar from "../components/Navbar.jsx";
+
 
 export default function Dashboard() {
   const [stats, setStats] = useState({
@@ -20,12 +19,12 @@ export default function Dashboard() {
       const token = localStorage.getItem("token");
       try {
         const [statsResponse, invoicesResponse] = await Promise.all([
-          axios.get("http://localhost:5000/api/invoice/stats", {
+          axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/invoice/stats`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           }),
-          axios.get("http://localhost:5000/api/invoice", {
+          axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/invoice`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -43,15 +42,6 @@ export default function Dashboard() {
 
     fetchDashboardData();
   }, []);
-
-  const handleSendReminder = async (invoiceId) => {
-    try {
-      await axios.post(`/api/invoices/${invoiceId}/remind`);
-      // Add success notification logic here
-    } catch (error) {
-      console.error("Error sending reminder:", error);
-    }
-  };
 
   if (isLoading) {
     return (
@@ -76,7 +66,7 @@ export default function Dashboard() {
           <DashboardStats stats={stats} />
         </section>
         <section>
-          <InvoiceTable invoices={invoices} onSendReminder={handleSendReminder} />
+          <InvoiceTable invoices={invoices}/>
         </section>
       </main>
   );

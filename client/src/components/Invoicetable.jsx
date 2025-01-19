@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const InvoiceTable = ({ invoices = [], onSendReminder }) => {
+const InvoiceTable = ({ invoices = []}) => {
   const [activeTab, setActiveTab] = useState("All");
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
@@ -25,7 +25,6 @@ const InvoiceTable = ({ invoices = [], onSendReminder }) => {
 
   return (
     <div className="mt-8 flex flex-col">
-      {/* Tabs and Search */}
       <div className="mb-4 flex flex-wrap justify-between items-center">
         <div className="flex space-x-4">
           {["All", "Outstanding", "Paid"].map((tab) => (
@@ -60,7 +59,6 @@ const InvoiceTable = ({ invoices = [], onSendReminder }) => {
         </div>
       </div>
 
-      {/* Invoice Table */}
       <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
           <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
@@ -130,7 +128,6 @@ const InvoiceTable = ({ invoices = [], onSendReminder }) => {
         </div>
       </div>
 
-      {/* Pagination */}
       <div className="mt-4 flex justify-between">
         <button
           className="px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100 border border-gray-300 rounded-md hover:bg-gray-200"

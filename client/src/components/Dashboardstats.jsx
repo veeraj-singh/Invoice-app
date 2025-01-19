@@ -6,7 +6,6 @@ import {
   } from "@heroicons/react/24/outline";
   
   const DashboardStats = ({ stats }) => {
-    // Helper to format numbers as currency
     const formatCurrency = (amount) =>
       new Intl.NumberFormat("en-IN", {
         style: "currency",
@@ -15,7 +14,6 @@ import {
   
     return (
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {/* Total Outstanding */}
         <div className="bg-white overflow-hidden shadow rounded-lg hover:shadow-lg transition-shadow">
           <div className="p-6">
             <div className="flex items-center">
@@ -39,7 +37,6 @@ import {
           </div>
         </div>
   
-        {/* Pending Invoices */}
         <div className="bg-white overflow-hidden shadow rounded-lg hover:shadow-lg transition-shadow">
           <div className="p-6">
             <div className="flex items-center">
@@ -60,7 +57,6 @@ import {
           </div>
         </div>
   
-        {/* Overdue Invoices */}
         <div className="bg-white overflow-hidden shadow rounded-lg hover:shadow-lg transition-shadow">
           <div className="p-6">
             <div className="flex items-center">
@@ -84,7 +80,6 @@ import {
           </div>
         </div>
   
-        {/* Paid This Month */}
         <div className="bg-white overflow-hidden shadow rounded-lg hover:shadow-lg transition-shadow">
           <div className="p-6">
             <div className="flex items-center">

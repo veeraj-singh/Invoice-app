@@ -7,7 +7,7 @@ dotenv.config()
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: `${process.env.BASE_URL}/api/auth/google/callback`,
+    callbackURL: `https://invoice-app-8q1z.onrender.com/api/auth/google/callback`,
     scope: ['profile', 'email']
 },
 async (accessToken, refreshToken, profile, done) => {

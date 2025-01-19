@@ -19,7 +19,7 @@ const InvoicePreviewPage = () => {
     const fetchInvoice = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`http://localhost:5000/api/invoice/${invoiceId}`, {
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/invoice/${invoiceId}`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }

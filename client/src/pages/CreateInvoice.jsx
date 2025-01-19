@@ -48,7 +48,7 @@ const CreateInvoicePage = () => {
         dueDate: new Date(invoiceData.dueDate).toISOString(),
       };
 
-      const response = await axios.post('http://localhost:5000/api/invoice', formattedData, {
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/invoice`, formattedData, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

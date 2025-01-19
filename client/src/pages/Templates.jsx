@@ -11,7 +11,7 @@ const EmailTemplateManagement = () => {
   useEffect(() => {
     const fetchTemplates = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/email-templates');
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/email-templates`);
         setTemplates(response.data);
         console.log(response.data)
       } catch (error) {
@@ -29,7 +29,7 @@ const EmailTemplateManagement = () => {
   const handleSaveTemplate = async () => {
     if (editableTemplate) {
       try {
-        const response = await axios.put(`http://localhost:5000/api/email-templates/${editableTemplate.type}`, {
+        const response = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/email-templates/${editableTemplate.type}`, {
             subject: editableTemplate.subject,
             body: editableTemplate.body,
           });

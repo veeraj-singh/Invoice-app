@@ -5,7 +5,7 @@ export default function Login() {
 
     const handleGoogleLogin = () => {
         setIsLoading(true);
-        window.location.href = 'http://localhost:5000/api/auth/google';
+        window.location.href = `${import.meta.env.VITE_BACKEND_URL}/api/auth/google`;
     };
 
     return (
