@@ -46,12 +46,13 @@ npm install
 
 4. Create a `.env` file in the frontend root directory:
 ```bash
-VITE_BACKEND_URL=https://invoice-app-8q1z.onrender.com
+VITE_BACKEND_URL = https://invoice-app-8q1z.onrender.com
 ```
+This is my publicly hosted backend url 
 
 5. Start the development server:
 ```bash
-npm start
+npm run dev
 ```
 
 The frontend will be available at `http://localhost:5173`
@@ -71,20 +72,20 @@ npm install
 3. Create a `.env` file in the backend root directory:
 ```bash
 PORT=5000
-MONGODB_URI=mongodb+srv://Veeraj:grr8UiVKeuX8H6TW@cluster0.dmply22.mongodb.net/Invoice-app
-GOOGLE_CLIENT_ID=991165870122-u4jh2ur0tgqfegq3gjqvrhbt3u2nsd40.apps.googleusercontent.com
-GOOGLE_CLIENT_SECRET=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
-JWT_SECRET=jwt_secret_key
-ZAPIER_API_KEY=341dd7f9fa57ee22a1bb6e4c13315f92a8467c24d67d84e35a41f9ade0d0721f
-CLIENT_URL=http://localhost:5173
-ZAPIER_WEBHOOK_URL1=https://hooks.zapier.com/hooks/catch/21356726/2k9s58p/
-ZAPIER_WEBHOOK_URL2=https://hooks.zapier.com/hooks/catch/21356726/2k9hwkk/
-
+MONGODB_URI
+GOOGLE_CLIENT_ID
+GOOGLE_CLIENT_SECRET
+JWT_SECRET
+ZAPIER_API_KEY
+CLIENT_URL
+ZAPIER_WEBHOOK_URL1
+ZAPIER_WEBHOOK_URL2
 ```
+Shared my env credentials in code document file .
 
 4. Start the backend server:
 ```bash
-npm start
+npm run start
 ```
 
 The backend will be running at `http://localhost:5000`
@@ -95,12 +96,17 @@ To run the complete application, you'll need to start both the frontend and back
 
 1. Start the frontend (in the frontend directory):
 ```bash
-npm start
+npm run dev
 ```
 
 2. Start the backend (in the backend directory):
 ```bash
-npm start
+npm run start
+```
+But as our backend is hooked by some zap workflows so , need to host it publicly .
+ You can use my publicly hosted backend :
+```bash
+URL : https://invoice-app-8q1z.onrender.com
 ```
 
 ## Development
