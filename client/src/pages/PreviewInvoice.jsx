@@ -44,7 +44,7 @@ const InvoicePreviewPage = () => {
   const handleSendEmail = async () => {
     setLoading(true);
     try {
-      await axios.post('http://localhost:5000/api/zapier/manual-reminder', { invoiceId }, {
+      await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/zapier/manual-reminder`, { invoiceId }, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       showNotification('success', 'Invoice email sent successfully!');
